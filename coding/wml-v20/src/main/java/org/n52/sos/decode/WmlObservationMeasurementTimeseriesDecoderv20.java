@@ -28,7 +28,9 @@
  */
 package org.n52.sos.decode;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 import net.opengis.gml.x32.TimePositionType;
@@ -41,9 +43,11 @@ import org.joda.time.DateTime;
 import org.n52.iceland.coding.decode.DecoderKey;
 import org.n52.iceland.exception.ows.OwsExceptionReport;
 import org.n52.iceland.exception.ows.concrete.UnsupportedDecoderInputException;
+import org.n52.iceland.ogc.gml.time.Time;
+import org.n52.iceland.ogc.gml.time.TimeInstant;
 import org.n52.iceland.ogc.gml.time.TimePosition;
-import org.n52.iceland.util.CollectionHelper;
-import org.n52.sos.ogc.wml.MeasurementTimeValuePair;
+import org.n52.sos.ogc.om.TimeValuePair;
+import org.n52.sos.ogc.om.values.QuantityValue;
 import org.n52.sos.ogc.wml.MeasurementTimeseries;
 import org.n52.sos.ogc.wml.MeasurementTimeseriesPoint;
 import org.n52.sos.ogc.wml.WaterMLConstants;
@@ -88,13 +92,11 @@ public class WmlObservationMeasurementTimeseriesDecoderv20 extends AbstractWmlDe
 			MeasurementTimeseries measurementTimeseries) {
         Point[] points = measurementTimeseriesType.getPointArray();
         
-        MeasurementTimeseriesPoint[] timeseriesPoints = new MeasurementTimeseriesPoint[points.length];
+        List<MeasurementTimeseriesPoint> timeseriesPointList = new ArrayList<>(points.length);
         
         for (Point point : points) {
 			
         	MeasurementTimeseriesPoint measurementTimeseriesPoint = new MeasurementTimeseriesPoint();
-        	
-        	MeasurementTimeValuePair measurementTimeValuePair = new MeasurementTimeValuePair();
         	
         	MeasureTVPType measurementTVP = point.getMeasurementTVP();
         	
@@ -102,15 +104,23 @@ public class WmlObservationMeasurementTimeseriesDecoderv20 extends AbstractWmlDe
         	
         	TimePosition timePosition = new TimePosition(DateTime.parse(timePositionType.getStringValue()));
         	
-        	measurementTimeValuePair.setTimePosition(timePosition);
+        	TimeInstant time = new TimeInstant(timePosition.getTime());
         	
-        	measurementTimeValuePair.setValue(measurementTVP.getValue().getDoubleValue());
+        	QuantityValue value = new QuantityValue(measurementTVP.getValue().getDoubleValue());
+        	
+        	TimeValuePair measurementTimeValuePair = new TimeValuePair(time, value);
+        	
+//        	measurementTimeValuePair.setTimePosition(timePosition);
+//        	
+//        	measurementTimeValuePair.setValue(measurementTVP.getValue().getDoubleValue());
         	
         	measurementTimeseriesPoint.setMeasurementTimeValuePair(measurementTimeValuePair);
         	
+        	timeseriesPointList.add(measurementTimeseriesPoint);
+        	
 		}
         
-        measurementTimeseries.setPoints(timeseriesPoints);
+        measurementTimeseries.setPoints(timeseriesPointList.toArray(new MeasurementTimeseriesPoint[timeseriesPointList.size()]));
 	}
 
 	@Override

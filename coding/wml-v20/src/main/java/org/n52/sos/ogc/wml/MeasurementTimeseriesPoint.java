@@ -28,16 +28,18 @@
  */
 package org.n52.sos.ogc.wml;
 
+import org.n52.sos.ogc.om.TimeValuePair;
+
 public class MeasurementTimeseriesPoint {
 
-	private MeasurementTimeValuePair measurementTimeValuePair;
+	private TimeValuePair measurementTimeValuePair;
 
-	public MeasurementTimeValuePair getMeasurementTimeValuePair() {
+	public TimeValuePair getMeasurementTimeValuePair() {
 		return measurementTimeValuePair;
 	}
 
 	public void setMeasurementTimeValuePair(
-			MeasurementTimeValuePair measurementTimeValuePair) {
+			TimeValuePair measurementTimeValuePair) {
 		this.measurementTimeValuePair = measurementTimeValuePair;
 	}
 }
