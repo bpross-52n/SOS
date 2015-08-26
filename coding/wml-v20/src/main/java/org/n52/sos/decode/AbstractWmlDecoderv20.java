@@ -28,7 +28,15 @@
  */
 package org.n52.sos.decode;
 
+import java.util.Set;
+
 public abstract class AbstractWmlDecoderv20 extends AbstractOmDecoderv20 {
+
+	public Set<String> getSupportedProcedureDescriptionFormats(String service,
+			String version) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 
 }
