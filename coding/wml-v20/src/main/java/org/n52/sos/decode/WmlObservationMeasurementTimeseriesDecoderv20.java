@@ -43,7 +43,6 @@ import org.joda.time.DateTime;
 import org.n52.iceland.coding.decode.DecoderKey;
 import org.n52.iceland.exception.ows.OwsExceptionReport;
 import org.n52.iceland.exception.ows.concrete.UnsupportedDecoderInputException;
-import org.n52.iceland.ogc.gml.time.Time;
 import org.n52.iceland.ogc.gml.time.TimeInstant;
 import org.n52.iceland.ogc.gml.time.TimePosition;
 import org.n52.sos.ogc.om.TimeValuePair;
@@ -109,10 +108,6 @@ public class WmlObservationMeasurementTimeseriesDecoderv20 extends AbstractWmlDe
         	QuantityValue value = new QuantityValue(measurementTVP.getValue().getDoubleValue());
         	
         	TimeValuePair measurementTimeValuePair = new TimeValuePair(time, value);
-        	
-//        	measurementTimeValuePair.setTimePosition(timePosition);
-//        	
-//        	measurementTimeValuePair.setValue(measurementTVP.getValue().getDoubleValue());
         	
         	measurementTimeseriesPoint.setMeasurementTimeValuePair(measurementTimeValuePair);
         	
