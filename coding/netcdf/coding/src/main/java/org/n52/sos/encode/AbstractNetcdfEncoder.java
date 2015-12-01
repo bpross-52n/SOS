@@ -1331,8 +1331,8 @@ public abstract class AbstractNetcdfEncoder implements ObservationEncoder<Binary
     }
     
     protected Attribute getAttribute(NetcdfFileWriter writer, String name) {
-        if (CollectionHelper.isNotEmpty(writer.getNetcdfFile().getGlobalAttributes())) {
-            for (Attribute attr : writer.getNetcdfFile().getGlobalAttributes()) {
+        if (CollectionHelper.isNotEmpty(writer.getNetcdfFile().getRootGroup().getAttributes())) {
+            for (Attribute attr : writer.getNetcdfFile().getRootGroup().getAttributes()) {
                 if (name.equals(attr.getShortName())) {
                     return attr;
                 }
@@ -1348,7 +1348,10 @@ public abstract class AbstractNetcdfEncoder implements ObservationEncoder<Binary
         } else if (identifier.startsWith(Constants.HTTP)) {
             splitter = Constants.SLASH_STRING;
         }
-        return identifier.substring(identifier.lastIndexOf(splitter) + 1);
+        if (identifier.lastIndexOf(splitter) < identifier.length()) {
+            return identifier.substring(identifier.lastIndexOf(splitter) + 1);
+        } 
+        return identifier;
     }
 
     protected String makeDateSafe(DateTime dt) {

@@ -47,9 +47,9 @@ import org.hibernate.MappingException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.jdbc.Work;
 import org.hibernate.mapping.Table;
 import org.hibernate.spatial.dialect.h2geodb.GeoDBDialect;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -116,20 +116,16 @@ public class H2Configuration {
             resources.add("mapping/transactional/TObservableProperty.hbm.xml");
             resources.add("mapping/transactional/TOffering.hbm.xml");
             resources.add("mapping/transactional/TProcedure.hbm.xml");
-            // old observation concept
-            // resources.add("mapping/old/observation/Observation.hbm.xml");
-            // resources.add("mapping/old/observation/ObservationInfo.hbm.xml");
-            // resources.add("mapping/old/spatialFilteringProfile/SpatialFitleringProfile.hbm.xml");
-            // series observation concept, needs changes in tests
-            resources.add("mapping/series/base/Series.hbm.xml");
-            resources.add("mapping/series/base/SeriesObservation.hbm.xml");
-            resources.add("mapping/series/base/SeriesObservationInfo.hbm.xml");
-            resources.add("mapping/series/base/SeriesObservationTime.hbm.xml");
-            resources.add("mapping/series/base/SeriesValue.hbm.xml");
-            resources.add("mapping/series/base/SeriesValueTime.hbm.xml");
+            // observation/values
+            resources.add("/mapping/series/base/ValuedObservation.hbm.xml");
+            resources.add("/mapping/series/base/Series.hbm.xml");
+            resources.add("/mapping/series/base/Observation.hbm.xml");
+            resources.add("/mapping/series/base/TemporalReferencedObservation.hbm.xml");
+            resources.add("/mapping/series/base/ContextualReferencedObservation.hbm.xml");
             resources.add("mapping/series/observation/Blob.hbm.xml");
             resources.add("mapping/series/observation/Boolean.hbm.xml");
             resources.add("mapping/series/observation/Category.hbm.xml");
+            resources.add("mapping/series/observation/Complex.hbm.xml");
             resources.add("mapping/series/observation/Count.hbm.xml");
             resources.add("mapping/series/observation/Geometry.hbm.xml");
             resources.add("mapping/series/observation/Numeric.hbm.xml");
@@ -138,6 +134,7 @@ public class H2Configuration {
             resources.add("mapping/series/value/Blob.hbm.xml");
             resources.add("mapping/series/value/Boolean.hbm.xml");
             resources.add("mapping/series/value/Category.hbm.xml");
+            resources.add("mapping/series/value/Complex.hbm.xml");
             resources.add("mapping/series/value/Count.hbm.xml");
             resources.add("mapping/series/value/Geometry.hbm.xml");
             resources.add("mapping/series/value/Numeric.hbm.xml");
@@ -274,7 +271,7 @@ public class H2Configuration {
                 }
                 FileUtils.forceDelete(directory);
             }
-        } catch (final Exception ex) {
+        } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
     }
@@ -298,41 +295,29 @@ public class H2Configuration {
     }
 
     private void prepareDatabase() {
-        Connection conn = null;
-        Statement stmt = null;
         try {
             Class.forName(H2_DRIVER);
-            conn = DriverManager.getConnection(H2_CONNECTION_URL);
-            GeoDB.InitGeoDB(conn);
-            stmt = conn.createStatement();
-            configuration = new Configuration().configure("/sos-hibernate.cfg.xml");
-            @SuppressWarnings("unchecked")
-            List<String> resources = (List<String>) properties.get(SessionFactoryProvider.HIBERNATE_RESOURCES);
-            for (String resource : resources) {
-                configuration.addResource(resource);
-            }
-            final GeoDBDialect dialect = new GeoDBDialect();
-            createScript = getCreateSrcipt(configuration.generateSchemaCreationScript(dialect));
-            dropScript = getDropScript(configuration.generateDropSchemaScript(dialect));
-            for (final String s : createScript) {
-                LOG.debug("Executing {}", s);
-                stmt.execute(s);
+            try (Connection conn = DriverManager.getConnection(H2_CONNECTION_URL)) {
+                GeoDB.InitGeoDB(conn);
+                try (Statement stmt = conn.createStatement()) {
+                    configuration = new Configuration().configure("/sos-hibernate.cfg.xml");
+                    @SuppressWarnings("unchecked")
+                    List<String> resources = (List<String>) properties
+                            .get(SessionFactoryProvider.HIBERNATE_RESOURCES);
+                    for (String resource : resources) {
+                        configuration.addInputStream(getClass().getResourceAsStream(resource));
+                    }
+                    final GeoDBDialect dialect = new GeoDBDialect();
+                    createScript = getCreateSrcipt(configuration.generateSchemaCreationScript(dialect));
+                    dropScript = getDropScript(configuration.generateDropSchemaScript(dialect));
+                    for (final String s : createScript) {
+                        LOG.debug("Executing {}", s);
+                        stmt.execute(s);
+                    }
+                }
             }
         } catch (ClassNotFoundException | SQLException | MappingException ex) {
             throw new RuntimeException(ex);
-        } finally {
-            if (stmt != null) {
-                try {
-                    stmt.close();
-                } catch (final SQLException ex) {
-                }
-            }
-            if (conn != null) {
-                try {
-                    conn.close();
-                } catch (final SQLException ex) {
-                }
-            }
         }
     }
 

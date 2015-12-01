@@ -44,7 +44,7 @@ import org.n52.sos.ogc.sos.SosEnvelope;
 
 /**
  * @author Christian Autermann <c.autermann@52north.org>
- * 
+ *
  * @since 4.0.0
  */
 public class FeatureQueryHandlerMock implements FeatureQueryHandler {
@@ -82,12 +82,12 @@ public class FeatureQueryHandlerMock implements FeatureQueryHandler {
 
     @Override
     public int getStorageEPSG() {
-        return getStorageEPSG();
+        return 0;
     }
 
     @Override
     public int getStorage3DEPSG() {
-        return getStorage3DEPSG();
+        return 0;
     }
 
     @Override
