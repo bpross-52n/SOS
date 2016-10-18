@@ -316,7 +316,7 @@ public class OmDecoderv20 extends AbstractOmDecoderv20 {
         return observationValue;
     }
 
-    private ObservationValue<?> getResult(OMObservationType omObservation) throws OwsExceptionReport {
+    protected ObservationValue<?> getResult(OMObservationType omObservation) throws OwsExceptionReport {
         XmlObject xbResult = omObservation.getResult();
 
         if (xbResult.schemaType() == XmlAnyTypeImpl.type) {

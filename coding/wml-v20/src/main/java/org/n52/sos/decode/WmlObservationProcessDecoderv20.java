@@ -32,14 +32,17 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
+import net.opengis.waterml.x20.ObservationProcessDocument;
+import net.opengis.waterml.x20.ObservationProcessPropertyType;
+import net.opengis.waterml.x20.ObservationProcessType;
+
 import org.n52.iceland.coding.decode.DecoderKey;
-import org.n52.iceland.coding.decode.ProcedureDecoder;
 import org.n52.iceland.exception.ows.OwsExceptionReport;
 import org.n52.iceland.exception.ows.concrete.UnsupportedDecoderInputException;
-import org.n52.iceland.service.ServiceConstants.SupportedType;
-import org.n52.iceland.service.ServiceConstants.ProcedureDescriptionFormat;
 import org.n52.iceland.ogc.sos.Sos2Constants;
 import org.n52.iceland.ogc.sos.SosConstants;
+import org.n52.iceland.service.ServiceConstants.ProcedureDescriptionFormat;
+import org.n52.iceland.service.ServiceConstants.SupportedType;
 import org.n52.iceland.util.CollectionHelper;
 import org.n52.sos.ogc.gml.ReferenceType;
 import org.n52.sos.ogc.om.NamedValue;
@@ -60,11 +63,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 
-import net.opengis.waterml.x20.ObservationProcessDocument;
-import net.opengis.waterml.x20.ObservationProcessPropertyType;
-import net.opengis.waterml.x20.ObservationProcessType;
-
-public class WmlObservationProcessDecoderv20 extends AbstractWmlDecoderv20 implements ProcedureDecoder<Object, Object> {
+public class WmlObservationProcessDecoderv20 extends AbstractWmlDecoderv20 {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WmlObservationProcessDecoderv20.class);
 

@@ -1,5 +1,5 @@
-/*
- * Copyright (C) 2012-2016 52°North Initiative for Geospatial Open Source
+/**
+ * Copyright (C) 2012-2015 52°North Initiative for Geospatial Open Source
  * Software GmbH
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -26,17 +26,20 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  */
-package org.n52.sos.decode;
+package org.n52.sos.ogc.wml;
 
-import java.util.Set;
+import org.n52.sos.ogc.om.TimeValuePair;
 
-public abstract class AbstractWmlDecoderv20 extends AbstractOmDecoderv20 {
+public class MeasurementTimeseriesPoint {
 
-	public Set<String> getSupportedProcedureDescriptionFormats(String service,
-			String version) {
-		// TODO Auto-generated method stub
-		return null;
+	private TimeValuePair measurementTimeValuePair;
+
+	public TimeValuePair getMeasurementTimeValuePair() {
+		return measurementTimeValuePair;
 	}
 
-
+	public void setMeasurementTimeValuePair(
+			TimeValuePair measurementTimeValuePair) {
+		this.measurementTimeValuePair = measurementTimeValuePair;
+	}
 }

@@ -45,6 +45,7 @@ import org.n52.sos.ogc.gml.AbstractGeometry;
 import org.n52.sos.ogc.gml.GmlMeasureType;
 import org.n52.sos.ogc.gml.ReferenceType;
 import org.n52.sos.ogc.om.NamedValue;
+import org.n52.sos.ogc.om.ObservationValue;
 import org.n52.sos.ogc.om.values.BooleanValue;
 import org.n52.sos.ogc.om.values.CategoryValue;
 import org.n52.sos.ogc.om.values.CountValue;
@@ -67,6 +68,7 @@ import com.vividsolutions.jts.geom.Geometry;
 
 import net.opengis.om.x20.NamedValuePropertyType;
 import net.opengis.om.x20.NamedValueType;
+import net.opengis.om.x20.OMObservationType;
 
 public abstract class AbstractOmDecoderv20 extends AbstractGmlDecoderv321<Object, Object> {
 
@@ -213,5 +215,10 @@ public abstract class AbstractOmDecoderv20 extends AbstractGmlDecoderv321<Object
             throw new UnsupportedDecoderInputException(this, xmlObject);
         }
     }
+
+	protected ObservationValue<?> getResult(OMObservationType omObservation)
+			throws OwsExceptionReport {
+		return null;
+	}
 
 }
