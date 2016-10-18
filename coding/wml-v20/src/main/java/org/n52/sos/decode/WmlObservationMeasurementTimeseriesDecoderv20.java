@@ -1,5 +1,5 @@
-/**
- * Copyright (C) 2012-2015 52°North Initiative for Geospatial Open Source
+/*
+ * Copyright (C) 2012-2016 52°North Initiative for Geospatial Open Source
  * Software GmbH
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -90,31 +90,31 @@ public class WmlObservationMeasurementTimeseriesDecoderv20 extends AbstractWmlDe
 			MeasurementTimeseriesType measurementTimeseriesType,
 			MeasurementTimeseries measurementTimeseries) {
         Point[] points = measurementTimeseriesType.getPointArray();
-        
+
         List<MeasurementTimeseriesPoint> timeseriesPointList = new ArrayList<>(points.length);
-        
+
         for (Point point : points) {
-			
+
         	MeasurementTimeseriesPoint measurementTimeseriesPoint = new MeasurementTimeseriesPoint();
-        	
+
         	MeasureTVPType measurementTVP = point.getMeasurementTVP();
-        	
-        	TimePositionType timePositionType = measurementTVP.getTime();	
-        	
+
+        	TimePositionType timePositionType = measurementTVP.getTime();
+
         	TimePosition timePosition = new TimePosition(DateTime.parse(timePositionType.getStringValue()));
-        	
+
         	TimeInstant time = new TimeInstant(timePosition.getTime());
-        	
+
         	QuantityValue value = new QuantityValue(measurementTVP.getValue().getDoubleValue());
-        	
+
         	TimeValuePair measurementTimeValuePair = new TimeValuePair(time, value);
-        	
+
         	measurementTimeseriesPoint.setMeasurementTimeValuePair(measurementTimeValuePair);
-        	
+
         	timeseriesPointList.add(measurementTimeseriesPoint);
-        	
+
 		}
-        
+
         measurementTimeseries.setPoints(timeseriesPointList.toArray(new MeasurementTimeseriesPoint[timeseriesPointList.size()]));
 	}
 

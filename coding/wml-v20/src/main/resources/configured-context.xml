@@ -5,7 +5,7 @@
 
     <!-- Decoder implementations from coding/wml-v20 -->
     <bean class="org.n52.sos.decode.WmlObservationMeasurementTimeseriesDecoderv20"/>
-    <bean class="org.n52.sos.decode.WmlObservationProcessDecoderv20"/>    
+    <bean class="org.n52.sos.decode.WmlObservationProcessDecoderv20"/>
     <!-- Encoder implementations from coding/wml-v20 -->
     <bean class="org.n52.sos.encode.WmlTVPEncoderv20"/>
     <bean class="org.n52.sos.encode.WmlTDREncoderv20"/>
