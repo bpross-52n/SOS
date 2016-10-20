@@ -87,40 +87,40 @@ public class WmlObservationMeasurementTimeseriesDecoderv20 extends AbstractWmlDe
     }
 
     private void parsePoints(
-			MeasurementTimeseriesType measurementTimeseriesType,
-			MeasurementTimeseries measurementTimeseries) {
+            MeasurementTimeseriesType measurementTimeseriesType,
+            MeasurementTimeseries measurementTimeseries) {
         Point[] points = measurementTimeseriesType.getPointArray();
 
         List<MeasurementTimeseriesPoint> timeseriesPointList = new ArrayList<>(points.length);
 
         for (Point point : points) {
 
-        	MeasurementTimeseriesPoint measurementTimeseriesPoint = new MeasurementTimeseriesPoint();
+            MeasurementTimeseriesPoint measurementTimeseriesPoint = new MeasurementTimeseriesPoint();
 
-        	MeasureTVPType measurementTVP = point.getMeasurementTVP();
+            MeasureTVPType measurementTVP = point.getMeasurementTVP();
 
-        	TimePositionType timePositionType = measurementTVP.getTime();
+            TimePositionType timePositionType = measurementTVP.getTime();
 
-        	TimePosition timePosition = new TimePosition(DateTime.parse(timePositionType.getStringValue()));
+            TimePosition timePosition = new TimePosition(DateTime.parse(timePositionType.getStringValue()));
 
-        	TimeInstant time = new TimeInstant(timePosition.getTime());
+            TimeInstant time = new TimeInstant(timePosition.getTime());
 
-        	QuantityValue value = new QuantityValue(measurementTVP.getValue().getDoubleValue());
+            QuantityValue value = new QuantityValue(measurementTVP.getValue().getDoubleValue());
 
-        	TimeValuePair measurementTimeValuePair = new TimeValuePair(time, value);
+            TimeValuePair measurementTimeValuePair = new TimeValuePair(time, value);
 
-        	measurementTimeseriesPoint.setMeasurementTimeValuePair(measurementTimeValuePair);
+            measurementTimeseriesPoint.setMeasurementTimeValuePair(measurementTimeValuePair);
 
-        	timeseriesPointList.add(measurementTimeseriesPoint);
+            timeseriesPointList.add(measurementTimeseriesPoint);
 
-		}
+        }
 
         measurementTimeseries.setPoints(timeseriesPointList.toArray(new MeasurementTimeseriesPoint[timeseriesPointList.size()]));
-	}
+    }
 
-	@Override
-	public Set<DecoderKey> getKeys() {
-		return DECODER_KEYS;
-	}
+    @Override
+    public Set<DecoderKey> getKeys() {
+        return DECODER_KEYS;
+    }
 
 }

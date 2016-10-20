@@ -32,14 +32,14 @@ import org.n52.sos.ogc.om.TimeValuePair;
 
 public class MeasurementTimeseriesPoint {
 
-	private TimeValuePair measurementTimeValuePair;
+    private TimeValuePair measurementTimeValuePair;
 
-	public TimeValuePair getMeasurementTimeValuePair() {
-		return measurementTimeValuePair;
-	}
+    public TimeValuePair getMeasurementTimeValuePair() {
+        return measurementTimeValuePair;
+    }
 
-	public void setMeasurementTimeValuePair(
-			TimeValuePair measurementTimeValuePair) {
-		this.measurementTimeValuePair = measurementTimeValuePair;
-	}
+    public void setMeasurementTimeValuePair(
+            TimeValuePair measurementTimeValuePair) {
+        this.measurementTimeValuePair = measurementTimeValuePair;
+    }
 }

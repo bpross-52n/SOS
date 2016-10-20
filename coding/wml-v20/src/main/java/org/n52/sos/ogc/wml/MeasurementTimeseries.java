@@ -28,19 +28,16 @@
  */
 package org.n52.sos.ogc.wml;
 
-
 public class MeasurementTimeseries {
 
-	private MeasurementTimeseriesPoint[] points;
+    private MeasurementTimeseriesPoint[] points;
 
-	public MeasurementTimeseriesPoint[] getPoints() {
-		return points;
-	}
+    public MeasurementTimeseriesPoint[] getPoints() {
+        return points;
+    }
 
-	public void setPoints(MeasurementTimeseriesPoint[] points) {
-		this.points = points;
-	}
-
-
+    public void setPoints(MeasurementTimeseriesPoint[] points) {
+        this.points = points;
+    }
 
 }

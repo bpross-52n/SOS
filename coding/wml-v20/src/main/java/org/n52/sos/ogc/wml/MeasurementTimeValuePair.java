@@ -32,24 +32,24 @@ import org.n52.iceland.ogc.gml.time.TimePosition;
 
 public class MeasurementTimeValuePair {
 
-	private TimePosition timePosition;
+    private TimePosition timePosition;
 
-	private double value;
+    private double value;
 
-	public TimePosition getTimePosition() {
-		return timePosition;
-	}
+    public TimePosition getTimePosition() {
+        return timePosition;
+    }
 
-	public void setTimePosition(TimePosition timePosition) {
-		this.timePosition = timePosition;
-	}
+    public void setTimePosition(TimePosition timePosition) {
+        this.timePosition = timePosition;
+    }
 
-	public double getValue() {
-		return value;
-	}
+    public double getValue() {
+        return value;
+    }
 
-	public void setValue(double value) {
-		this.value = value;
-	}
+    public void setValue(double value) {
+        this.value = value;
+    }
 
 }
